@@ -1,1 +1,1 @@
-export const DB_NAME="VideoStreamingPlatform"
+export const DB_NAME = "VideoStreamingPlatform";

@@ -53,7 +53,7 @@ const userSchema = new Schema(
 
 userSchema.pre("save", async () => {
   if (!this.isModified("password"))
-    this.password = bcrypt.hash(this.password, 10);
+    this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
@@ -79,7 +79,7 @@ userSchema.methods.generateAccessToken = async () => {
 userSchema.methods.generateRefreshToken = async () => {
   return jsonWebToken.sign(
     {
-      _id: this._id
+      _id: this._id,
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
