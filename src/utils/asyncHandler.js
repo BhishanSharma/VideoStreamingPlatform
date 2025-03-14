@@ -1,6 +1,6 @@
 // Instead of wrapping the function every time in async and try-catch use this utility
 const asyncHandler = (requestHandler) => {
-  (req, res, next) => {
+  return (req, res, next) => {
     Promise.resolve(requestHandler(req, res, next)).catch((error) =>
       next(error)
     );
