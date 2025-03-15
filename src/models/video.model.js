@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+// can't load all videos at once so use it to control flow
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const videoSchema = new Schema(
