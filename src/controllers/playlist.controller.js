@@ -24,7 +24,7 @@ const createPlaylist = asyncHandler(async (req, res) => {
 
 const removePlaylist = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { playlistId } = req.query;
+    const { playlistId } = req.params;
 
     if (!playlistId) {
         throw new ApiError(400, "playlistId is required");
@@ -53,7 +53,7 @@ const getMyPlaylists = asyncHandler(async (req, res) => {
 
 const addToPlaylist = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { playlistId, videoId } = req.body;
+    const { playlistId, videoId } = req.params;
 
     if (!playlistId || !videoId) {
         throw new ApiError(400, "Playlist ID and Video ID are required.");
@@ -85,7 +85,7 @@ const addToPlaylist = asyncHandler(async (req, res) => {
 
 const removeFromPlaylist = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { videoId, playlistId } = req.query;
+    const { videoId, playlistId } = req.params;
     if (!videoId || !playlistId) {
         throw new ApiError(400, "Both videoId and playlistId are required");
     }
@@ -110,7 +110,7 @@ const removeFromPlaylist = asyncHandler(async (req, res) => {
 })
 
 const accessPlaylist = asyncHandler(async (req, res) => {
-    const { playlistId } = req.body;
+    const { playlistId } = req.params;
     if (!playlistId) {
         throw new ApiError(400, "Playlist ID is required.");
     }
@@ -126,7 +126,7 @@ const accessPlaylist = asyncHandler(async (req, res) => {
 
 const changeNameOrDescription = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { playlistId } = req.query;
+    const { playlistId } = req.params;
     const { newTitle, newDescription } = req.body;
 
     if (!playlistId) {
