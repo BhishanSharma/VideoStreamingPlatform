@@ -18,7 +18,7 @@ const createTweet = asyncHandler(async (req, res) => {
 
 const removeTweet = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
-  const { tweetId } = req.query;
+  const { tweetId } = req.params;
 
   if (!tweetId) {
     throw new ApiError(400, "tweetId is required");
@@ -40,7 +40,7 @@ const removeTweet = asyncHandler(async (req, res) => {
 
 const editTweet = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
-  const { tweetId } = req.query;
+  const { tweetId } = req.params;
   const { newTweet } = req.body;
 
   if (!tweetId) {
