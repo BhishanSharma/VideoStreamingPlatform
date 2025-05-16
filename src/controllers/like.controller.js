@@ -5,7 +5,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 
 const createLike = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { commentId, videoId, tweetId } = req.body;
+    const { commentId, videoId, tweetId } = req.params;
 
     if (!commentId && !videoId && !tweetId) {
         throw new ApiError(400, "No target specified to like.");
@@ -32,7 +32,7 @@ const createLike = asyncHandler(async (req, res) => {
 
 const removeLike = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { commentId, tweetId, videoId } = req.query;
+    const { commentId, tweetId, videoId } = req.params;
 
     if (!commentId && !tweetId && !videoId) {
         throw new ApiError(400, "No target specified to remove like.");
@@ -59,7 +59,7 @@ const removeLike = asyncHandler(async (req, res) => {
 });
 
 const countLikes = asyncHandler(async (req, res) => {
-    const { commentId, videoId, tweetId } = req.query;
+    const { commentId, videoId, tweetId } = req.params;
 
     const filter = {
         ...(commentId && { comment: commentId }),
