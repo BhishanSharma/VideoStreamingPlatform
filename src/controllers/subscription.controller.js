@@ -5,7 +5,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 
 const subscribe = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { channel } = req.body;
+    const { channel } = req.params;
     
     if (!channel) {
         throw new ApiError(400, "Channel ID is required.");
@@ -34,7 +34,7 @@ const subscribe = asyncHandler(async (req, res) => {
 
 const unsubscribe = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { channel } = req.body;
+    const { channel } = req.params;
 
     if (!channel) {
         throw new ApiError(400, "Channel ID is required.");
