@@ -19,4 +19,13 @@ const likeSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
+// Allow only one of comment, video, or tweet
+likeSchema.pre("validate", function (next) {
+  const targets = [this.comment, this.video, this.tweet].filter(Boolean);
+  if (targets.length !== 1) {
+    return next(new Error("Like must be associated with exactly one target."));
+  }
+  next();
+});
+
 export const Like = mongoose.model("Like", likeSchema);

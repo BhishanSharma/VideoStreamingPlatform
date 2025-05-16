@@ -237,8 +237,11 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  const user = User.findById(req.user._id);
-  const isPasswordValid = user.isPasswordCorrect(oldPassword);
+  if (newPassword.length < 8) {
+    throw new ApiError(400, "Password must be at least 8 characters long");
+  }
+  const user = await User.findById(req.user._id);
+  const isPasswordValid = await user.isPasswordCorrect(oldPassword);
   if (!isPasswordValid) throw new ApiError(400, "Invalid old password");
   user.password = newPassword;
   await user.save({ validateBeforeSave: false });
@@ -462,6 +465,50 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     );
 });
 
+const changeUsername = asyncHandler(async (req, res) => {
+  const userId = req.user?._id;
+  const { username } = req.query;
+
+  if (!username) {
+    throw new ApiError(400, "Username is required");
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  user.username = username;
+  await user.save();
+
+  return res.status(200).json(
+    new ApiResponse(200, user, "Username updated successfully")
+  );
+});
+
+const changeFullname = asyncHandler(async (req, res) => {
+  const userId = req.user?._id;
+  const { fullname } = req.query;
+
+  if (!fullname) {
+    throw new ApiError(400, "fullname is required");
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  user.fullname = fullname;
+  await user.save();
+
+  return res.status(200).json(
+    new ApiResponse(200, user, "fullname updated successfully")
+  );
+});
+
 export {
   registerUser,
   loginUser,
@@ -474,4 +521,6 @@ export {
   updateUserCoverImage,
   getUserChannelProfile,
   getWatchHistory,
+  changeUsername,
+  changeFullname
 };
