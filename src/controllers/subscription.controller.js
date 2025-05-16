@@ -5,15 +5,15 @@ import asyncHandler from "../utils/asyncHandler.js";
 
 const subscribe = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { channel } = req.params;
+    const { channelId } = req.params;
     
-    if (!channel) {
+    if (!channelId) {
         throw new ApiError(400, "Channel ID is required.");
     }
 
     const existingSubscription = await Subscription.findOne({
         subscriber: userId,
-        channel: channel
+        channel: channelId
     });
 
     if (existingSubscription) {
@@ -22,7 +22,7 @@ const subscribe = asyncHandler(async (req, res) => {
 
     const newSubscription = await Subscription.create({
         subscriber: userId,
-        channel: channel
+        channel: channelId
     });
 
     if (!newSubscription) {
@@ -34,15 +34,15 @@ const subscribe = asyncHandler(async (req, res) => {
 
 const unsubscribe = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    const { channel } = req.params;
+    const { channelId } = req.params;
 
-    if (!channel) {
+    if (!channelId) {
         throw new ApiError(400, "Channel ID is required.");
     }
 
     const deleted = await Subscription.findOneAndDelete({
         subscriber: userId,
-        channel: channel
+        channel: channelId
     });
 
     if (!deleted) {
