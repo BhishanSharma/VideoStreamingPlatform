@@ -65,9 +65,9 @@ const uploadVideo = asyncHandler(async (req, res) => {
 });
 
 const getStreamingUrl = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { videoId } = req.params;
 
-  const video = await Video.findById(id);
+  const video = await Video.findById(videoId);
   if (!video) {
     return res.status(404).json({ success: false, message: "Video not found" });
   }
