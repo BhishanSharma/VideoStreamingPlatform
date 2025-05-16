@@ -11,22 +11,22 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = Router();
 
 // Create a comment for a video
-router.post("/comment/video/:videoId", verifyJWT, createComment);
+router.post("/video/:videoId", verifyJWT, createComment);
 
 // Delete a comment by commentId
-router.delete("/comment/:commentId", verifyJWT, deleteComment);
+router.delete("/:commentId", verifyJWT, deleteComment);
 
 // Edit a comment by commentId
-router.patch("/comment/:commentId", verifyJWT, editComment);
+router.patch("/:commentId", verifyJWT, editComment);
 
 // Get comments for a video with optional pagination params
 // Example: /comments/video/123/page/2/limit/5
 router.get(
-    "/comments/video/:videoId/page/:page?/limit/:limit?",
+    "/video/:videoId/page/:page?/limit/:limit?",
     getComments
 );
 
 // Get total comment count for a video
-router.get("/comments/video/:videoId/count", countComments);
+router.get("/video/:videoId/count", countComments);
 
 export default router;
