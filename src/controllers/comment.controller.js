@@ -5,7 +5,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 
 const createComment = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
-  const { videoId } = req.query;
+  const { videoId } = req.params;
   const { content } = req.body;
 
   if (!videoId) {
@@ -32,7 +32,7 @@ const createComment = asyncHandler(async (req, res) => {
 
 const deleteComment = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
-  const { commentId } = req.body;
+  const { commentId } = req.params;
 
   if (!commentId) {
     throw new ApiError(400, "Comment ID is required");
@@ -56,7 +56,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
 const editComment = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
-  const { commentId } = req.query;
+  const { commentId } = req.params;
   const { newComment } = req.body;
 
   if (!commentId) {
@@ -87,9 +87,9 @@ const editComment = asyncHandler(async (req, res) => {
 });
 
 const getComments = asyncHandler(async (req, res) => {
-  const { videoId } = req.query;
-  let page = Number(req.query.page) || 1;
-  let limit = Number(req.query.limit) || 10;
+  const { videoId } = req.params;
+  let page = Number(req.params.page) || 1;
+  let limit = Number(req.params.limit) || 10;
 
   if (!videoId) {
     throw new ApiError(400, "videoId is required");
@@ -114,7 +114,7 @@ const getComments = asyncHandler(async (req, res) => {
 });
 
 const countComments = asyncHandler(async (req, res) => {
-  const { videoId } = req.query;
+  const { videoId } = req.params;
   if (!videoId) {
     throw new ApiError(400, "videoId is required");
   }
