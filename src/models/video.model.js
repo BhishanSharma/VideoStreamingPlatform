@@ -28,6 +28,12 @@ const videoSchema = new Schema(
       type: Number,
       default: 0,
     },
+    videoPublicId: {
+      type: String,
+    },
+    thumbnailPublicId: {
+      type: String,
+    },
     isPublished: {
       type: Boolean,
       default: true,
